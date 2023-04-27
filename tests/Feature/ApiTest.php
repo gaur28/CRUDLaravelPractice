@@ -2,12 +2,14 @@
 
 namespace Tests\Feature;
 
+use Faker\Guesser\Name;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ApiTest extends TestCase
 {
+    use WithFaker;
     /**
      * A basic feature test example.
      */
@@ -24,16 +26,17 @@ class ApiTest extends TestCase
 public function test_post_request_on_api():void{
         $response = $this->postJson('api/v1/coustmers',[
             "method"=> "POST",
-            "name" => "tushar Gaur",
+            "name" => $this->faker->name(),
             "type" => "I",
-            "email"=> "test1@test.com",
+            "email"=> $this->faker->email(),
             "address" => "some street"
         ]);
 
         $response
             ->assertStatus(201)
             ->assertValid('name', 'email')
-            ->assertSuccessful();
+            ->assertSuccessful()
+            ->dump();
 
 
     }
@@ -45,9 +48,9 @@ public function test_post_request_on_api():void{
  public function test_put_request_on_api():void{
     $response = $this->putJson('api/v1/coustmers/1',[
         "method"=> "PUT",
-        "name" => "tushar Gaur",
+        "name" => $this->faker->name(),
         "type" => "I",
-        "email"=> "test1@test.com",
+        "email"=> $this->faker->email(),
         "address" => "some street"
     ]);
 
@@ -63,7 +66,7 @@ public function test_post_request_on_api():void{
  public function test_patch_request_on_api():void{
       $response = $this->patchJson('api/v1/coustmers/10',[
         "method"=> "PATCH",
-        "name" => "tushar Gaur",
+        "name" => $this->faker->name(),
 
     ]);
 
